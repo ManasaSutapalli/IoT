@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Home Page</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+      
+      <style>
+      .center{
+        text-align:center
+      }
+      .pull-right{
+        float:right
+      }
+      .white-text{
+        color:#fff !important
+      }
+      </style>
+   </head>
+   <body>
+      <div ng-app="myApp" ng-controller="myCtrl" class="container">
+         <br>
+         <a href="/addEquipment" class="btn btn-primary pull-right white-text">Add Equipment</a>
+         <h2>View All Equipments</h2>
+         
+         <p>this table contains all Equipments in database</p>
+         <table class="table table-striped">
+            <thead>
+               <th class="center">Equipment Number</th>
+               <th class="center">Address</th>
+               <th class="center">Contract Start Date</th>
+               <th class="center">Contract End Date</th>
+               <th class="center">Status (Running or Stopped)</th>
+               <th class="center">Action</th>
+            </thead>
+            <tbody>
+               <tr ng-repeat="row in records">
+                  <td class="center">{{row.equipment_no}}</td>
+                  <td class="center">{{row.address}}</td>
+                  <td class="center">{{row.start_date}}</td>
+                  <td class="center">{{row.end_date}}</td>
+                  <td class="center">{{row.status}}</td>
+                  <td class="center"><a href="/getEquipmentDetails?id={{row._id}}">View</a></td>
+               </tr>
+         </table>
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+      <script>
+         var records='<%- JSON.stringify(data) %>';
+         records=JSON.parse(records);
+         var app = angular.module('myApp', []);
+         app.controller('myCtrl', function($scope) {
+             $scope.records = records;
+         });
+      </script>
+   </body>
+</html>

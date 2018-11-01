@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Insert Form</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+      <style>
+         .center{
+         text-align:center
+         }
+         .pull-right{
+         float:right
+         }
+         .white-text{
+         color:#fff !important
+         }
+      </style>
+   </head>
+   <body>
+      <div ng-app="myApp" ng-controller="myCtrl" class="container">
+         <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+               <!-- Modal content-->
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                     <p>{{message}}.</p>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <br>
+         <a href="/getAllEquipments?limit=no" class="btn btn-primary pull-right white-text">View All Equipments</a>
+         <h2>Add Equipments</h2>
+         <p>fill different equipment no</p>
+         <form>
+            <div class="form-group">
+               <label for="email">Equipment Number:</label>
+               <input type="text" class="form-control" ng-model="data.equipment_no">
+            </div>
+            <div class="form-group">
+               <label for="pwd">Address:</label>
+               <input type="text" class="form-control" ng-model="data.address" required>
+            </div>
+            <div class="form-group">
+               <label for="pwd">Contract Start Date:</label>
+               <input type="text" class="form-control" ng-model="data.start_date" required>
+            </div>
+            <div class="form-group">
+               <label for="pwd">Contract End Date:</label>
+               <input type="text" class="form-control" ng-model="data.end_date" required>
+            </div>
+            <div class="form-group">
+               <label for="pwd">Status:</label>
+               <input type="text" class="form-control" ng-model="data.status" required>
+            </div>
+            <button type="submit" class="btn btn-primary" ng-click="submit(data)">Submit</button>
+         </form>
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+      <script>
+         var app = angular.module('myApp', []);
+         
+         app.controller('myCtrl', function($scope,$http) {
+           $scope.message="Sorry insertion failed";
+           $scope.data={};
+           $scope.submit=function(data){
+             $scope.message="please wait while we insert data";
+             $("#myModal").modal();
+               $http({
+         url: '/addEquipmentApi',
+         method: "POST",
+         data: {data }
+         })
+         .then(function(response) {
+         console.log(response)
+         if(response.data.error){
+         $scope.message="Sorry inserting data failed may equipment already exist";
+         }else{
+         $scope.message="Inserted successfully";
+         }
+         
+         }, 
+         function(response) { // optional
+            console.log(response)
+            $scope.message="Sorry inserting data failed";
+           
+         });
+           }
+           
+         });
+      </script>
+   </body>
+</html>

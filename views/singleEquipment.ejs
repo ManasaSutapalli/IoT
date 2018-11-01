@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Single Equipment Data</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+      
+      <style>
+         .center{
+         text-align:center
+         }
+         .pull-right{
+         float:right
+         }
+         .white-text{
+         color:#fff !important
+         }
+      </style>
+   </head>
+   <body>
+      <div ng-app="myApp" ng-controller="myCtrl" class="container">
+         <br>
+         <a href="/getAllEquipments?limit=no" class="btn btn-primary pull-right white-text">View All Equipments</a>
+         <h2>View Equipment Details</h2>
+         <p>this table contains single equipment details</p>
+         <br>
+         <div class="container">
+            <table class="table table-striped">
+               <thead>
+                  <th >Record</th>
+                  <th >Value</th>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td >Equipment Number</td>
+                     <td >{{row.equipment_no}}</td>
+                  </tr>
+                  <tr>
+                     <td>Address</td>
+                     <td >{{row.address}}</td>
+                  </tr>
+                  <tr>
+                     <td>Contract Start Date</td>
+                     <td >{{row.start_date}}</td>
+                  </tr>
+                  <tr>
+                     <td>Contract End Date</td>
+                     <td >{{row.end_date}}</td>
+                  </tr>
+                  <tr>
+                     <td>Status</td>
+                     <td >{{row.status}}</td>
+                  </tr>
+                  </tr>
+            </table>
+         </div>
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+      <script>
+         var record='<%- JSON.stringify(data) %>';
+         record=JSON.parse(record);
+         var app = angular.module('myApp', []);
+         app.controller('myCtrl', function($scope) {
+             $scope.row = record;
+         });
+      </script>
+   </body>
+</html>
